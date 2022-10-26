@@ -1,3 +1,7 @@
+import java.lang.Math;
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 /**
  * Clase que contiene métodos estáticos para implementar las operaciones:
  * -Suma, resta, división, multiplicación con redondeo
@@ -9,10 +13,9 @@ public class CalculadoraRedondeo {
 
     /**
      * Constructor privado
-     * Creado para preveer que el usuario cree instancias de esta clase ya que todos los métodos que la componen son estáticos
+     * Creado para preveer que se creen instancias de esta clase ya que todos los métodos que la componen son estáticos
      */
     private CalculadoraRedondeo() {
-
     }
 
     /**
@@ -22,28 +25,31 @@ public class CalculadoraRedondeo {
      * @param redondeo número de decimales a redondear
      * @return suma de num1 y num2 redondeado al número de decimales del parámetro 'redondeo'
      */
-    public static double sumaRedondeo(Double num1, Double num2, Integer redondeo) {
-        //Comprobación de null en los parámetros
-        if((num1 == null) || (num2 == null) || (redondeo == null)) {
-            throw new NullPointerException("Error en método sumaRedondeo de la clase CalculadoraRedondeo: Uno de los parámetros es null");
-        }
-        double resultado = 0; //Variable que almacenará el resultado de la suma
-        System.out.println("Sumando");
+    public static BigDecimal sumaRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
+        BigDecimal resultado = num1.add(num2,redondeo);
         return resultado;
     }
 
-    public static double restaRedondeo(Double num1, Double num2, Integer redondeo) {
-        //Comprobación de null en los parámetros
-        if((num1 == null) || (num2 == null) || (redondeo == null)) {
-            throw new NullPointerException("Error en método restaRedondeo de la clase CalculadoraRedondeo: Uno de los parámetros es null");
-        }
-        double resultado = 0;
-        System.out.println("Restando");
+    public static BigDecimal restaRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
+        BigDecimal resultado = num1.subtract(num2,redondeo);
         return resultado;
     }
 
+    public static BigDecimal multiplicacionRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
+        BigDecimal resultado = num1.multiply(num2,redondeo);
+        return resultado;
+    }
 
-    public static String recogerResultados(Double num1, Double num2, Integer redondeo) {
+    public static BigDecimal divisionRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
+        BigDecimal resultado = num1.divide(num2,redondeo);
+        return resultado;
+    }
+
+    //public static BigDecimal modulo(BigDecimal num1, BigDecimal num2) {
+
+    //}
+
+    public static String recogerResultados(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
         return "";
     }
 
