@@ -1,6 +1,6 @@
-import java.lang.Math;
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 /**
  * Clase que contiene métodos estáticos para implementar las operaciones:
@@ -25,23 +25,24 @@ public class CalculadoraRedondeo {
      * @param redondeo número de decimales a redondear
      * @return suma de num1 y num2 redondeado al número de decimales del parámetro 'redondeo'
      */
-    public static BigDecimal sumaRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
-        BigDecimal resultado = num1.add(num2,redondeo);
+    public static BigDecimal sumaRedondeo(BigDecimal num1, BigDecimal num2, int precision) {
+        BigDecimal resultado = num1.add(num2);
+        resultado = resultado.setScale(precision, RoundingMode.HALF_UP);
         return resultado;
     }
 
-    public static BigDecimal restaRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
-        BigDecimal resultado = num1.subtract(num2,redondeo);
+    public static BigDecimal restaRedondeo(BigDecimal num1, BigDecimal num2, MathContext precision) {
+        BigDecimal resultado = num1.subtract(num2,precision);
         return resultado;
     }
 
-    public static BigDecimal multiplicacionRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
-        BigDecimal resultado = num1.multiply(num2,redondeo);
+    public static BigDecimal multiplicacionRedondeo(BigDecimal num1, BigDecimal num2, MathContext precision) {
+        BigDecimal resultado = num1.multiply(num2,precision);
         return resultado;
     }
 
-    public static BigDecimal divisionRedondeo(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
-        BigDecimal resultado = num1.divide(num2,redondeo);
+    public static BigDecimal divisionRedondeo(BigDecimal num1, BigDecimal num2, MathContext precision) {
+        BigDecimal resultado = num1.divide(num2,precision);
         return resultado;
     }
 
@@ -49,8 +50,9 @@ public class CalculadoraRedondeo {
 
     //}
 
-    public static String recogerResultados(BigDecimal num1, BigDecimal num2, MathContext redondeo) {
-        return "";
+    public static String recogerResultados(BigDecimal num1, BigDecimal num2, MathContext precision) {
+        StringBuilder textoFinal = new StringBuilder();
+        return textoFinal.toString();
     }
 
 }
