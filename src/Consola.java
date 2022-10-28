@@ -26,11 +26,11 @@ public class Consola {
      */
     public void iniciarConsola() {
         Scanner console = new Scanner(System.in);
-        int opcion = -1; //Variable que alamacenará la opción que seleccionará el usuario
+        int opcion = -1; //Variable que almacenará la opción que seleccionará el usuario
         BigDecimal num1;
         BigDecimal num2;
         BigDecimal resultado;
-        int precision;
+        Integer precision;
 
         System.out.println("Ejercicio 1:");
 
@@ -61,18 +61,34 @@ public class Consola {
 
                         resultado = CalculadoraRedondeo.sumaRedondeo(num1,num2,precision);
 
-                        System.out.println("El resultado de la operación es " + resultado.toString());
+                        System.out.println("El resultado de la suma es " + resultado.toString());
 
 
                         break;
                     case OPCIONRESTA:
+                        System.out.println("Operación de resta");
+                        System.out.println("Inserte el primer número");
+                        num1 = new BigDecimal(console.next());
+                        System.out.println("Inserte el sustraendo de la resta");
+                        num2 = new BigDecimal(console.next());
+                        System.out.println("Inserte la precisión de los decimales");
+                        precision = console.nextInt();
+
+                        resultado = CalculadoraRedondeo.restaRedondeo(num1,num2,precision);
+
+                        System.out.println("El resultado de la resta es " + resultado.toString());
 
                         break;
                     case OPCIONMULTIPLICACION:
 
+
+                        //resultado = CalculadoraRedondeo.multiplicacionRedondeo(num1,num2,precision);
+                        //System.out.println("El resultado de la multiplciacion es " + resultado.toString());
                         break;
                     case OPCIONDIVISION:
 
+                        //resultado = CalculadoraRedondeo.divisionRedondeo(num1,num2,precision);
+                        //System.out.println("El resultado de la resta es " + resultado.toString());
                         break;
                     case OPCIONMODULO:
 
@@ -110,6 +126,29 @@ public class Consola {
 
         }
     }
+
+    /*
+    public void leerParametrosTeclado(BigDecimal num1, BigDecimal num2,Scanner consola) {
+
+
+    }
+    
+     */
+
+
+/*
+    public void leerParametrosTeclado(Scanner consola) {
+
+        System.out.println("Inserte el primer número");
+        num1 = new BigDecimal(console.next());
+        System.out.println("Inserte el segundo número");
+        num2 = new BigDecimal(console.next());
+        System.out.println("Inserte la precisión de los decimales");
+        precision = console.nextInt();
+
+    }
+
+ */
 
     /**
      * Limpia todo el texto que aparece en la consola
