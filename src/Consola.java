@@ -170,8 +170,9 @@ public class Consola {
     /**
      * Limpia la pantalla, escribe el menú inicial y añade un último mensaje a continuación
      * @param mensajeFinal mensaje de texto
+     * @throws NullPointerException si mensajeFinal es null
      */
-    public void escribirMensajeFinalConsolaYVolverMenu(String mensajeFinal) {
+    public void escribirMensajeFinalConsolaYVolverMenu(String mensajeFinal) throws NullPointerException{
         if(mensajeFinal == null) {
             throw new NullPointerException("En el método escribirMensajeFinalConsolaYVolverMenu de la clase consola el String argumentado es null");
         }
@@ -187,8 +188,9 @@ public class Consola {
      * @param num2
      * @param precision
      * @return texto con el resultado de realizar todas las operaciones de la calculadora realizadas sobre sus parámetros
+     * @throws NullPointerException alguno de sus parámetros es null
      */
-    public static String recogerResultados(BigDecimal num1, BigDecimal num2, int precision) {
+    public static String recogerResultados(BigDecimal num1, BigDecimal num2, int precision) throws NullPointerException {
         if((num1==null) || (num2 == null)) { //Comprobación de parámetros de entrada
             throw new NullPointerException();
         }
@@ -227,7 +229,8 @@ public class Consola {
             //    Runtime.getRuntime().exec("clear");
             //}
         }
-        catch (final Exception e) {
+        catch (final Exception e) { //Error producido en la entrada o salida
+            System.out.println(e.toString());
         }
     }
 
