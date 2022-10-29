@@ -19,6 +19,7 @@ public class Consola {
 
     //Formato de texto
     public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m"; //Para que el texto tenga un fondo verde
+    public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m"; //Para que el texto tenga un fondo amarillo
     public static final String ANSI_RESET = "\u001B[0m"; //Para devolver el texto a la normalidad
 
     /**
@@ -31,17 +32,16 @@ public class Consola {
         int precision = 0; //Almacenará la precisión de los decimales que seleccione el usuario
         BigDecimal num1; //Primer número introducido por teclado
         BigDecimal num2; //Segundo número introducido por teclado
-        BigDecimal resultado; //Instancia que contendrá el resultado final de la operación seleccionada
+        BigDecimal resultado; //Instancia que contendrá el número final de la operación seleccionada en suma,resta,multiplicacion y division
 
         System.out.println("Ejercicio 1:");
-
         imprimirMenu();
 
-        while(opcion != OPCIONSALIR) {
+        while (opcion != OPCIONSALIR) {
             try {
                 opcion = scanner.nextInt(); //Leemos la operación que quiere realizar el usuario
 
-                switch(opcion) {
+                switch (opcion) {
                     case OPCIONSUMA:
                         System.out.println("Operación de suma");
                         System.out.println("Inserte el primer sumando");
@@ -50,12 +50,11 @@ public class Consola {
                         num2 = new BigDecimal(scanner.next());
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
+                        resultado = CalculadoraRedondeo.sumaRedondeo(num1, num2, precision);
 
-                        resultado = CalculadoraRedondeo.sumaRedondeo(num1,num2,precision);
-                        System.out.println("El resultado de la suma es " + resultado.toString());
-
-
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + "El resultado de la suma es " + resultado.toString() + ANSI_RESET);
                         break;
+
                     case OPCIONRESTA:
                         System.out.println("Operación de resta");
                         System.out.println("Inserte el minuendo de la resta");
@@ -64,11 +63,11 @@ public class Consola {
                         num2 = new BigDecimal(scanner.next());
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
+                        resultado = CalculadoraRedondeo.restaRedondeo(num1, num2, precision);
 
-                        resultado = CalculadoraRedondeo.restaRedondeo(num1,num2,precision);
-                        System.out.println("El resultado de la resta es " + resultado.toString());
-
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + "El resultado de la resta es " + resultado.toString() + ANSI_RESET);
                         break;
+
                     case OPCIONMULTIPLICACION:
                         System.out.println("Operación de multiplicación");
                         System.out.println("Inserte el primer número a multiplicar");
@@ -77,11 +76,11 @@ public class Consola {
                         num2 = new BigDecimal(scanner.next());
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
+                        resultado = CalculadoraRedondeo.multiplicacionRedondeo(num1, num2, precision);
 
-
-                        resultado = CalculadoraRedondeo.multiplicacionRedondeo(num1,num2,precision);
-                        System.out.println("El resultado de la multiplciacion es " + resultado.toString());
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + "El resultado de la multiplicación es " + resultado.toString() + ANSI_RESET);
                         break;
+
                     case OPCIONDIVISION:
                         System.out.println("Operación de division");
                         System.out.println("Inserte el dividendo de la división");
@@ -90,10 +89,11 @@ public class Consola {
                         num2 = new BigDecimal(scanner.next());
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
+                        resultado = CalculadoraRedondeo.divisionRedondeo(num1, num2, precision);
 
-                        resultado = CalculadoraRedondeo.divisionRedondeo(num1,num2,precision);
-                        System.out.println("El resultado de la resta es " + resultado.toString());
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + "El resultado de la división es " + resultado.toString() + ANSI_RESET);
                         break;
+
                     case OPCIONMODULO:
                         System.out.println("Operación de módulo");
                         System.out.println("Inserte el primer número");
@@ -101,20 +101,17 @@ public class Consola {
                         System.out.println("Inserte el número para el módulo de la operación");
                         num2 = new BigDecimal(scanner.next());
 
-                        System.out.println(CalculadoraRedondeo.mensajeModuloBigDecimal(num1,num2));
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + CalculadoraRedondeo.mensajeModuloBigDecimal(num1, num2) + ANSI_RESET);
                         break;
 
                     case OPCIONCOMPARACION:
-                        int valorComparacion = -1;
-
                         System.out.println("Operación comparación de números");
                         System.out.println("Inserte el primer número");
                         num1 = new BigDecimal(scanner.next());
                         System.out.println("Inserte el segundo número");
                         num2 = new BigDecimal(scanner.next());
 
-                        valorComparacion = num1.compareTo(num2);
-                        System.out.println(CalculadoraRedondeo.mensajeEsMayor(num1,num2));
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + CalculadoraRedondeo.mensajeEsMayor(num1, num2) + ANSI_RESET);
                         break;
 
 
@@ -126,30 +123,28 @@ public class Consola {
                         num2 = new BigDecimal(scanner.next());
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
-                        System.out.println(this.recogerResultados(num1,num2,precision));
 
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + this.recogerResultados(num1, num2, precision) + ANSI_RESET);
                         break;
+
                     case OPCIONSALIR:
-                        System.out.println("Saliendo del programa");
+                        System.out.println(ANSI_GREEN_BACKGROUND + "Saliendo del programa" + ANSI_RESET);
                         break;
+
                     default:
-                        this.clearConsola();
-                        this.imprimirMenu();
-                        System.out.println(ANSI_GREEN_BACKGROUND + "Opción tecleada incorrecta. Seleccione una opción con un número del 1 al 8" + ANSI_RESET);
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Opción tecleada incorrecta. Seleccione una opción con un número del 1 al 8" + ANSI_RESET);
+
                 }
 
-                this.imprimirMenu(); //Finalmente, volvemos a imprimir el menú
-
-            } catch(InputMismatchException e) {
-                System.out.println(ANSI_GREEN_BACKGROUND + "Opción tecleada incorrecta. Seleccione una de las opciones disponibles" + ANSI_RESET);
+            } catch (InputMismatchException e) { //Ocurre cuando metemos un caracter dierente a un número
+                this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Opción tecleada incorrecta. Seleccione una de las opciones disponibles" + ANSI_RESET);
                 scanner.nextLine();
-                this.clearConsola();
 
-            } catch(NumberFormatException e) { //Formato de los numeros decimales
-                this.clearConsola();
-                System.out.println(ANSI_GREEN_BACKGROUND + "Formato incorrecto del número. Volviendo al menú principal" + ANSI_RESET);
-                this.imprimirMenu();
+            } catch (NumberFormatException e) { //Formato de los numeros decimales
+                this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Formato incorrecto del número. Se ha vuelto al menú principal" + ANSI_RESET);
                 scanner.nextLine();
+            } catch (NullPointerException e){
+                System.out.println(e.toString());
             }
         }
     }
@@ -170,6 +165,20 @@ public class Consola {
         System.out.println("_____________________________________________________________________");
         System.out.println("Formato de los números: decimales separados por un '.' (Ej: 123.456)");
         System.out.println("Escriba un número para seleccionar la opción que desees:");
+    }
+
+    /**
+     * Limpia la pantalla, escribe el menú inicial y añade un último mensaje a continuación
+     * @param mensajeFinal mensaje de texto
+     */
+    public void escribirMensajeFinalConsolaYVolverMenu(String mensajeFinal) {
+        if(mensajeFinal == null) {
+            throw new NullPointerException("En el método escribirMensajeFinalConsolaYVolverMenu de la clase consola el String argumentado es null");
+        }
+        this.clearConsola();
+        this.imprimirMenu();
+        System.out.println(mensajeFinal);
+        System.out.println("Seleccione otra opción del menú");
     }
 
     /**
@@ -204,8 +213,22 @@ public class Consola {
      * Limpia el texto que aparece en la consola
      */
     public void clearConsola() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            final String os = System.getProperty("os.name");
+
+            if(os.contains("Windows")) { //Para sistemas de Windows
+                //Para windos, ejecutamos el interpretador de lineas 'cmd'
+                //Luego le decimos que ejecute el comando '/c cls'
+                //Conectamos el output de ese comando con inheritIO() para limpiar la consola en Windows
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            }
+            //Probarlo en otros sistemas operativos
+            //else { //Para cualquier otro sistema operativo
+            //    Runtime.getRuntime().exec("clear");
+            //}
+        }
+        catch (final Exception e) {
+        }
     }
 
 }
