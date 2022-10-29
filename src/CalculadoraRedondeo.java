@@ -75,8 +75,7 @@ public class CalculadoraRedondeo {
         if((num1==null) || (num2 == null)) { //Comprobación de parámetros de entrada
             throw new NullPointerException();
         }
-        BigDecimal resultado = num1.divide(num2);
-        resultado = resultado.setScale(precision, RoundingMode.HALF_UP);
+        BigDecimal resultado = num1.divide(num2, precision, RoundingMode.HALF_UP);
         return resultado;
     }
 
