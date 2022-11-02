@@ -1,3 +1,4 @@
+import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.math.BigDecimal;
@@ -8,18 +9,54 @@ import java.math.BigDecimal;
  */
 public class Consola {
     //Opciones del menú
+    /**
+     * Representa la opción de sumar en el menú
+     */
     public static final int OPCIONSUMA = 1;
+    /**
+     * Representa la opción de restar en el menú
+     */
     public static final int OPCIONRESTA = 2;
+    /**
+     * Representa la opción de multiplicar en el menú
+     */
     public static final int OPCIONMULTIPLICACION = 3;
+    /**
+     * Representa la opción de dividir en el menú
+     */
     public static final int OPCIONDIVISION = 4;
+    /**
+     * Representa la opción de comprobar el módulo de dos números en el menú
+     */
     public static final int OPCIONMODULO = 5;
+    /**
+     * Representa la opción de comparar dos números en el menú
+     */
     public static final int OPCIONCOMPARACION = 6;
+    /**
+     * Representa la opción de realizar todas las operaciones que puede realizar la calculadora en el menú
+     */
     public static final int OPCIONTODAS = 7;
+    /**
+     * Representa la opción de salir de la aplicación en el menú
+     */
     public static final int OPCIONSALIR = 8;
 
     //Formato de texto
-    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m"; //Para que el texto tenga un fondo verde
+    /**
+     * Utilizada al imprimir por pantalla caracteres.
+     * Hace que el texto escrito tengan un fondo verde.
+     */
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+    /**
+     * Utilizada al imprimir por pantalla caracteres.
+     * Hace que texto escrito tengan un fondo amarillo.
+     */
     public static final String ANSI_YELLOW_BACKGROUND = "\u001B[43m"; //Para que el texto tenga un fondo amarillo
+    /**
+     * Utilizada al imprimir por pantalla caracteres.
+     * Hace que texto escrito tenga el formato por defecto.
+     */
     public static final String ANSI_RESET = "\u001B[0m"; //Para devolver el texto a la normalidad
 
     /**
@@ -28,18 +65,24 @@ public class Consola {
      */
     public void iniciarConsola() {
         Scanner scanner = new Scanner(System.in);
-        int opcion = 0; //Almacenará la opción del menú que introducirá el usuario
-        int precision = 0; //Almacenará la precisión de los decimales que seleccione el usuario
-        BigDecimal num1; //Primer número introducido por teclado
-        BigDecimal num2; //Segundo número introducido por teclado
-        BigDecimal resultado; //Instancia que contendrá el número final de la operación seleccionada en suma,resta,multiplicacion y division
+        //Almacenará la opción del menú que introducirá el usuario
+        int opcion = 0;
+        //Almacenará la precisión de los decimales que seleccione el usuario
+        int precision = 0;
+        //Primer número introducido por teclado
+        BigDecimal num1;
+        //Segundo número introducido por teclado
+        BigDecimal num2;
+        //Instancia que contendrá el número final de la operación seleccionada en suma,resta,multiplicacion y division
+        BigDecimal resultado;
 
         System.out.println("Ejercicio 1:");
         imprimirMenu();
 
         while (opcion != OPCIONSALIR) {
             try {
-                opcion = scanner.nextInt(); //Leemos la operación que quiere realizar el usuario
+                //Leemos la operación que quiere realizar el usuario
+                opcion = scanner.nextInt();
 
                 switch (opcion) {
                     case OPCIONSUMA:
@@ -135,15 +178,16 @@ public class Consola {
                         this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Opción tecleada incorrecta. Seleccione una opción con un número del 1 al 8" + ANSI_RESET);
 
                 }
-
-            } catch (InputMismatchException e) { //Ocurre cuando metemos un caracter dierente a un número
+            //Ocurre cuando metemos un caracter dierente a un número
+            } catch (InputMismatchException e) {
                 this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Opción tecleada incorrecta. Seleccione una de las opciones disponibles" + ANSI_RESET);
                 scanner.nextLine();
 
-            } catch (NumberFormatException e) { //Formato de los numeros decimales
+             //Formato de los numeros decimales
+            } catch (NumberFormatException e) {
                 this.escribirMensajeFinalConsolaYVolverMenu(ANSI_YELLOW_BACKGROUND + "Formato incorrecto del número. Se ha vuelto al menú principal" + ANSI_RESET);
                 scanner.nextLine();
-            } catch (NullPointerException e){
+            } catch (InvalidParameterException e){
                 System.out.println(e.toString());
             }
         }
@@ -191,7 +235,8 @@ public class Consola {
      * @throws NullPointerException alguno de sus parámetros es null
      */
     public static String recogerResultados(BigDecimal num1, BigDecimal num2, int precision) throws NullPointerException {
-        if((num1==null) || (num2 == null)) { //Comprobación de parámetros de entrada
+        //Comprobación de parámetros de entrada
+        if((num1==null) || (num2 == null)) {
             throw new NullPointerException();
         }
         StringBuilder textoFinal = new StringBuilder();
@@ -228,8 +273,9 @@ public class Consola {
             //else { //Para cualquier otro sistema operativo
             //    Runtime.getRuntime().exec("clear");
             //}
-        }
-        catch (final Exception e) { //Error producido en la entrada o salida
+
+        //Error producido en la entrada o salida
+        } catch (final Exception e) {
             System.out.println(e.toString());
         }
     }
