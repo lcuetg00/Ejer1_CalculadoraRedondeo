@@ -101,12 +101,8 @@ public class CalculadoraRedondeo {
         if((num1==null) || (num2 == null)) {
             throw new InvalidParameterException();
         }
-        boolean esModulo = false;
-        if(num1.remainder(num2).compareTo(BigDecimal.ZERO) == 0 ) {
-            esModulo = true;
-        }
 
-        return esModulo;
+        return (num1.remainder(num2).compareTo(BigDecimal.ZERO) == 0);
     }
 
     /**
@@ -144,10 +140,9 @@ public class CalculadoraRedondeo {
         if((num1==null) || (num2 == null)) {
             throw new InvalidParameterException();
         }
-        int valorComparacion = -1;
+        int valorComparacion = num1.compareTo(num2);
         String mensajeMayorMenorIgual = "";
 
-        valorComparacion = num1.compareTo(num2);
         if(valorComparacion == 1) {
             mensajeMayorMenorIgual = num1.toString() + " es mayor que " + num2.toString();
         } else if (valorComparacion == -1) {
