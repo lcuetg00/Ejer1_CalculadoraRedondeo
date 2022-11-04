@@ -35,6 +35,26 @@ public class CalculadoraRedondeo {
     }
 
     /**
+     * Devuelve la suma de números decimales contenidos en un array de string. Redondea el resultado utilizando el parámetro 'precision'
+     * @param valores array de string con los números decimales
+     * @param precision número de decimales a redondear
+     * @throws InvalidParameterException
+     * @return
+     */
+    public static BigDecimal sumaRedondeo(final String[] valores, final int precision) throws InvalidParameterException {
+        if((valores == null) || (valores.length <=1)) {
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo(String[]) la lista no puede contener 1 o menos de 1 valor");
+        }
+        BigDecimal resultado = BigDecimal.ZERO;
+
+        for(int i=0;i<(valores.length);i++) {
+            resultado = resultado.add(new BigDecimal(valores[i]));
+        }
+
+        return resultado.setScale(precision, RoundingMode.HALF_UP);
+    }
+
+    /**
      * Devuelve la resta de dos BigDecimal redondeados al número de decimales especificado en el parámetro 'precision'
      * @param num1 número al que se le va a realizar la resta
      * @param num2 sustraendo de la resta
@@ -96,5 +116,7 @@ public class CalculadoraRedondeo {
         }
         return (num1.remainder(num2).compareTo(BigDecimal.ZERO) == 0);
     }
+
+
 
 }

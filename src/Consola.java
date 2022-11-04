@@ -92,12 +92,12 @@ public class Consola {
                     case OPCIONSUMA:
                         System.out.println("Operación de suma");
                         System.out.println("Inserte el primer sumando");
-                        num1 = new BigDecimal(scanner.next());
+                        String num1Suma = scanner.next();
                         System.out.println("Inserte el segundo sumando");
-                        num2 = new BigDecimal(scanner.next());
+                        String num2Suma = scanner.next();
                         System.out.println("Inserte la precisión de los decimales");
                         precision = scanner.nextInt();
-                        resultado = CalculadoraRedondeo.sumaRedondeo(num1, num2, precision);
+                        resultado = CalculadoraRedondeo.sumaRedondeo(new String[]{num1Suma, num2Suma}, precision);
 
                         this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + "El resultado de la suma es " + resultado.toString() + ANSI_RESET);
                         break;
