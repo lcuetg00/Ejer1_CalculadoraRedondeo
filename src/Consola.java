@@ -58,6 +58,10 @@ public class Consola {
      * Hace que texto escrito tenga el formato por defecto.
      */
     public static final String ANSI_RESET = "\u001B[0m"; //Para devolver el texto a la normalidad
+    /**
+     * Retorno de carro proporcionado por el sistema que se esté utilizando
+     */
+    public static final String RETORNO_CARRO = System.getProperty("line.separator");
 
     /**
      * Inicia la interfaz de la consola.
@@ -144,7 +148,7 @@ public class Consola {
                         System.out.println("Inserte el número para el módulo de la operación");
                         num2 = new BigDecimal(scanner.next());
 
-                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + CalculadoraRedondeo.mensajeModuloBigDecimal(num1, num2) + ANSI_RESET);
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + this.mensajeModuloBigDecimal(num1, num2) + ANSI_RESET);
                         break;
 
                     case OPCIONCOMPARACION:
@@ -154,7 +158,7 @@ public class Consola {
                         System.out.println("Inserte el segundo número");
                         num2 = new BigDecimal(scanner.next());
 
-                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + CalculadoraRedondeo.mensajeEsMayor(num1, num2) + ANSI_RESET);
+                        this.escribirMensajeFinalConsolaYVolverMenu(ANSI_GREEN_BACKGROUND + this.mensajeEsMayor(num1, num2) + ANSI_RESET);
                         break;
 
 
@@ -216,7 +220,7 @@ public class Consola {
      * @param mensajeFinal mensaje de texto
      * @throws NullPointerException si mensajeFinal es null
      */
-    public void escribirMensajeFinalConsolaYVolverMenu(String mensajeFinal) throws NullPointerException{
+    public void escribirMensajeFinalConsolaYVolverMenu(final String mensajeFinal) throws NullPointerException{
         if(mensajeFinal == null) {
             throw new NullPointerException("En el método escribirMensajeFinalConsolaYVolverMenu de la clase consola el String argumentado es null");
         }
@@ -232,26 +236,21 @@ public class Consola {
      * @param num2
      * @param precision
      * @return texto con el resultado de realizar todas las operaciones de la calculadora realizadas sobre sus parámetros
-     * @throws NullPointerException alguno de sus parámetros es null
+     * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static String recogerResultados(BigDecimal num1, BigDecimal num2, int precision) throws NullPointerException {
+    public String recogerResultados(final BigDecimal num1, final BigDecimal num2, final int precision) throws NullPointerException {
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new NullPointerException();
+            throw new InvalidParameterException();
         }
+
         StringBuilder textoFinal = new StringBuilder();
-        textoFinal.append("El resultado de la suma es ");
-        textoFinal.append(CalculadoraRedondeo.sumaRedondeo(num1,num2,precision).toString());
-        textoFinal.append("\nEl resultado de la resta es ");
-        textoFinal.append(CalculadoraRedondeo.restaRedondeo(num1,num2,precision).toString());
-        textoFinal.append("\nEl resultado de la multiplicación es ");
-        textoFinal.append(CalculadoraRedondeo.multiplicacionRedondeo(num1,num2,precision).toString());
-        textoFinal.append("\nEl resultado de la división es ");
-        textoFinal.append(CalculadoraRedondeo.divisionRedondeo(num1,num2,precision).toString());
-        textoFinal.append("\n");
-        textoFinal.append(CalculadoraRedondeo.mensajeModuloBigDecimal(num1,num2));
-        textoFinal.append("\n");
-        textoFinal.append(CalculadoraRedondeo.mensajeEsMayor(num1,num2));
+        textoFinal.append("El resultado de la suma es " + CalculadoraRedondeo.sumaRedondeo(num1,num2,precision) + RETORNO_CARRO);
+        textoFinal.append("El resultado de la resta es " +CalculadoraRedondeo.restaRedondeo(num1,num2,precision) + RETORNO_CARRO);
+        textoFinal.append("El resultado de la multiplicación es " + CalculadoraRedondeo.multiplicacionRedondeo(num1,num2,precision) + RETORNO_CARRO);
+        textoFinal.append("El resultado de la división es " + CalculadoraRedondeo.divisionRedondeo(num1,num2,precision) + RETORNO_CARRO);
+        textoFinal.append(this.mensajeModuloBigDecimal(num1,num2) + RETORNO_CARRO);
+        textoFinal.append(this.mensajeEsMayor(num1,num2) + RETORNO_CARRO);
 
         return textoFinal.toString();
     }
@@ -278,6 +277,43 @@ public class Consola {
         } catch (final Exception e) {
             System.out.println(e.toString());
         }
+    }
+
+    /**
+     * Crea un String describiendo si num1 es módulo de num2
+     * @param num1
+     * @param num2
+     * @return mensajeEsModulo: String que contiene en forma de texto si num1 es módulo de num2
+     * @throws InvalidParameterException alguno de sus parámetros es null
+     */
+    public static String mensajeModuloBigDecimal(final BigDecimal num1, final BigDecimal num2) throws InvalidParameterException {
+        return (CalculadoraRedondeo.moduloBigDecimal(num1,num2)) ?  num1 + " es módulo de " + num2 : num1 + " no es módulo de " + num2;
+    }
+
+    /**
+     * Crea un String describiendo si num1 es mayor, menos o de igual valor que num2
+     * @param num1
+     * @param num2
+     * @return mensajeMayorMenorIgual: String que contiene en forma de texto si num1 es mayor, menor o de igual valor de num2
+     * @throws NullPointerException alguno de sus parámetros es null
+     */
+    public static String mensajeEsMayor(final BigDecimal num1, final BigDecimal num2) throws InvalidParameterException {
+        //Comprobación de parámetros de entrada
+        if((num1==null) || (num2 == null)) {
+            throw new InvalidParameterException();
+        }
+        int valorComparacion = num1.compareTo(num2);
+        String mensajeMayorMenorIgual = "";
+
+        if(valorComparacion == 1) {
+            mensajeMayorMenorIgual = num1 + " es mayor que " + num2;
+        } else if (valorComparacion == -1) {
+            mensajeMayorMenorIgual = num2 + " es mayor que " + num1;
+        } else {
+            mensajeMayorMenorIgual = num1 + " es igual que " + num2;
+        }
+
+        return mensajeMayorMenorIgual;
     }
 
 }

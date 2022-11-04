@@ -13,7 +13,7 @@ public class CalculadoraRedondeo {
 
     /**
      * Constructor privado
-     * Creado para preveer que se creen instancias de esta clase ya que todos los métodos que la componen son estáticos
+     * Creado para prevenir que se creen instancias de esta clase ya que todos los métodos que la componen son estáticos
      */
     private CalculadoraRedondeo() {
     }
@@ -26,14 +26,12 @@ public class CalculadoraRedondeo {
      * @return suma de num1 y num2 redondeado al número de decimales especificado en el parámetro 'precision'
      * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static BigDecimal sumaRedondeo(BigDecimal num1, BigDecimal num2, int precision) throws InvalidParameterException {
+    public static BigDecimal sumaRedondeo(final BigDecimal num1, final BigDecimal num2, final int precision) throws InvalidParameterException {
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo alguno de sus parámetros es null");
         }
-        BigDecimal resultado = num1.add(num2);
-        resultado = resultado.setScale(precision, RoundingMode.HALF_UP);
-        return resultado;
+        return num1.add(num2).setScale(precision, RoundingMode.HALF_UP);
     }
 
     /**
@@ -44,14 +42,12 @@ public class CalculadoraRedondeo {
      * @return resta de num1 y num2 redondeado al número de decimales especificado en el parámetro 'precision'
      * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static BigDecimal restaRedondeo(BigDecimal num1, BigDecimal num2, int precision) throws InvalidParameterException {
+    public static BigDecimal restaRedondeo(final BigDecimal num1, final BigDecimal num2, final int precision) throws InvalidParameterException {
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo alguno de sus parámetros es null");
         }
-        BigDecimal resultado = num1.subtract(num2);
-        resultado = resultado.setScale(precision, RoundingMode.HALF_UP);
-        return resultado;
+        return num1.subtract(num2).setScale(precision, RoundingMode.HALF_UP);
     }
 
     /**
@@ -62,14 +58,12 @@ public class CalculadoraRedondeo {
      * @return multiplicación de num1 y num2 redondeado al número de decimales especificado en el parámetro 'precision'
      * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static BigDecimal multiplicacionRedondeo(BigDecimal num1, BigDecimal num2, int precision) throws InvalidParameterException{
+    public static BigDecimal multiplicacionRedondeo(final BigDecimal num1, final BigDecimal num2, final int precision) throws InvalidParameterException{
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo alguno de sus parámetros es null");
         }
-        BigDecimal resultado = num1.multiply(num2);
-        resultado = resultado.setScale(precision, RoundingMode.HALF_UP);
-        return resultado;
+        return num1.multiply(num2).setScale(precision, RoundingMode.HALF_UP);
     }
     /**
      * Devuelve la división de dos BigDecimal redondeados al número de decimales especificado en el parámetro 'precision'
@@ -79,13 +73,12 @@ public class CalculadoraRedondeo {
      * @return división de num1 y num2 redondeado al número de decimales especificado en el parámetro 'precision'
      * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static BigDecimal divisionRedondeo(BigDecimal num1, BigDecimal num2, int precision) throws InvalidParameterException {
+    public static BigDecimal divisionRedondeo(final BigDecimal num1, final BigDecimal num2, final int precision) throws InvalidParameterException {
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo alguno de sus parámetros es null");
         }
-        BigDecimal resultado = num1.divide(num2, precision, RoundingMode.HALF_UP);
-        return resultado;
+        return num1.divide(num2, precision, RoundingMode.HALF_UP);
     }
 
     /**
@@ -96,62 +89,12 @@ public class CalculadoraRedondeo {
      *         esModulo = false: si num1 módulo num2 != 0
      * @throws InvalidParameterException alguno de sus parámetros es null
      */
-    public static boolean moduloBigDecimal(BigDecimal num1, BigDecimal num2) throws  InvalidParameterException {
+    public static boolean moduloBigDecimal(final BigDecimal num1, final BigDecimal num2) throws  InvalidParameterException {
         //Comprobación de parámetros de entrada
         if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo alguno de sus parámetros es null");
         }
-
         return (num1.remainder(num2).compareTo(BigDecimal.ZERO) == 0);
-    }
-
-    /**
-     * Crea un String describiendo si num1 es módulo de num2
-     * @param num1
-     * @param num2
-     * @return mensajeEsModulo: String que contiene en forma de texto si num1 es módulo de num2
-     * @throws InvalidParameterException alguno de sus parámetros es null
-     */
-    public static String mensajeModuloBigDecimal(BigDecimal num1, BigDecimal num2) throws InvalidParameterException {
-        //Comprobación de parámetros de entrada
-        if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
-        }
-        String mensajeEsModulo = "";
-
-        if(CalculadoraRedondeo.moduloBigDecimal(num1,num2)) {
-            mensajeEsModulo = num1.toString() + " es módulo de " + num2.toString();
-        } else {
-            mensajeEsModulo = num1.toString() + " no es módulo de " + num2.toString();
-        }
-
-        return mensajeEsModulo;
-    }
-
-    /**
-     * Crea un String describiendo si num1 es mayor, menos o de igual valor que num2
-     * @param num1
-     * @param num2
-     * @return mensajeMayorMenorIgual: String que contiene en forma de texto si num1 es mayor, menor o de igual valor de num2
-     * @throws NullPointerException alguno de sus parámetros es null
-     */
-    public static String mensajeEsMayor(BigDecimal num1, BigDecimal num2) throws InvalidParameterException {
-        //Comprobación de parámetros de entrada
-        if((num1==null) || (num2 == null)) {
-            throw new InvalidParameterException();
-        }
-        int valorComparacion = num1.compareTo(num2);
-        String mensajeMayorMenorIgual = "";
-
-        if(valorComparacion == 1) {
-            mensajeMayorMenorIgual = num1.toString() + " es mayor que " + num2.toString();
-        } else if (valorComparacion == -1) {
-            mensajeMayorMenorIgual = num2.toString() + " es mayor que " + num1.toString();
-        } else {
-            mensajeMayorMenorIgual = num1.toString() + " es igual que " + num2.toString();
-        }
-
-        return mensajeMayorMenorIgual;
     }
 
 }
