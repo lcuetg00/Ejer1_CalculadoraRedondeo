@@ -18,6 +18,7 @@ public class CalculadoraRedondeo {
     private CalculadoraRedondeo() {
     }
 
+
     /**
      * Devuelve la suma de dos BigDecimal redondeados al número de decimales especificado en el parámetro 'precision'
      * @param num1 sumando número 1
@@ -38,17 +39,22 @@ public class CalculadoraRedondeo {
      * Devuelve la suma de números decimales contenidos en un array de string. Redondea el resultado utilizando el parámetro 'precision'
      * @param valores array de string con los números decimales
      * @param precision número de decimales a redondear
-     * @throws InvalidParameterException
+     * @throws InvalidParameterException si 'valores' es null
+     *                                   si el tamaño de 'valores' tamaño es 1 o menos que 1
+     *                                   si alguno de los elementos de 'valores' es null
      * @return
      */
-    public static BigDecimal sumaRedondeo(final String[] valores, final int precision) throws InvalidParameterException {
+    public static BigDecimal sumaRedondeo(final int precision, final BigDecimal ... valores) throws InvalidParameterException {
         if((valores == null) || (valores.length <=1)) {
-            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo(String[]) la lista no puede contener 1 o menos de 1 valor");
+            throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo(int precision, BigDecimal ...) la lista no puede contener 1 o menos de 1 valor");
         }
         BigDecimal resultado = BigDecimal.ZERO;
 
-        for(int i=0;i<(valores.length);i++) {
-            resultado = resultado.add(new BigDecimal(valores[i]));
+        for(BigDecimal valoresDecimales : valores) {
+            if(valoresDecimales == null) { //Si alguno de sus valores es null
+                throw new InvalidParameterException("Clase CalculadoraRedondeo: sumaRedondeo(int precision, BigDecimal ...) valores puede contener valores null");
+            }
+            resultado = resultado.add(valoresDecimales);
         }
 
         return resultado.setScale(precision, RoundingMode.HALF_UP);
